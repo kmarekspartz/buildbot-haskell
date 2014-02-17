@@ -29,8 +29,7 @@ class Cabal:
 
     def install(self, package, **kwarg):
         return ShellCommand(
-            name="cabal install",
-            description="Installing package {0}".format(package),
+            name="cabal install {0}".format(package),
             command=list(chain(["cabal", "install", package], self.allOpts)),
             **kwargs
         )
