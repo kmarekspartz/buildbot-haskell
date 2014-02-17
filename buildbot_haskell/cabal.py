@@ -34,3 +34,26 @@ class Cabal:
             command=list(chain(["cabal", "install", package], self.allOpts())),
             **kwargs
         )
+
+    def __sandbox_check(self):
+        if self.sandbox is None:
+            raise ValueError(
+                "sandbox_init: sandbox is not defined.\n"
+                "Provide the sandbox argument when creating a Cabal object")
+
+    def sandbox_init(self, **kwargs):
+        self.__sandbox_check()
+        return ShellCommand(
+            name="cabal sandbox init",
+            description="Initializing sandbox at {0}".format(self.sandbox),
+            workdir=self.sandbox,
+            command=["cabal","sandbox","init"]
+        )
+    def sandbox_delete(self, **kwargs):
+        self.__sandbox_check()
+        return ShellCommand(
+            name="cabal sandbox delete",
+            description="Deleting sandbox at {0}".format(self.sandbox),
+            workdir=self.sandbox,
+            command=["cabal","sandbox","delete"]
+        )
