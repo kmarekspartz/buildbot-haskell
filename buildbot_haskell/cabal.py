@@ -2,9 +2,10 @@ from buildbot.steps.shell import ShellCommand
 from itertools import chain
 
 class Cabal:
-    sandbox = None
-    optimization = 0
-    jobs = 1
+    def __init__ (self, sandbox = None, optimization = 0, jobs = 1):
+        self.sandbox = sandbox
+        self.optimization = optimization
+        self.jobs = jobs
 
     def sandboxOpt(self):
         if not self.sandbox is None:
