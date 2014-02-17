@@ -18,7 +18,7 @@ class Cabal:
         yield "-j{0}".format(self.jobs)
 
     def allOpts(self):
-        chain(self.sandboxOpt(), self.optimizationOpt(), self.jobsOpt())
+        return chain(self.sandboxOpt(), self.optimizationOpt(), self.jobsOpt())
 
     def update(self, **kwargs):
         return ShellCommand(
