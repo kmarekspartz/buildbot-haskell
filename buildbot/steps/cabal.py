@@ -23,13 +23,13 @@ class Cabal:
         return ShellCommand(
             name="cabal update",
             description="Downloading the latest package list",
-            command=list(chain(["cabal", "update"], self.allOpts)),
+            command=list(chain(["cabal", "update"], self.allOpts())),
             **kwargs
         )
 
     def install(self, package, **kwarg):
         return ShellCommand(
             name="cabal install {0}".format(package),
-            command=list(chain(["cabal", "install", package], self.allOpts)),
+            command=list(chain(["cabal", "install", package], self.allOpts())),
             **kwargs
         )
