@@ -24,7 +24,7 @@ class Cabal:
         return ShellCommand(
             name="cabal update",
             description="Downloading the latest package list",
-            command=list(chain(["cabal", "update"], self.allOpts())),
+            command=["cabal", "update"],
             **kwargs
         )
 
