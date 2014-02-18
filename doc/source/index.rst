@@ -9,6 +9,28 @@ buildbot-haskell
 .. toctree::
    :maxdepth: 2
 
+About
+-----
+
+buildbot-haskell is an add-on package for `buildbot <http://buildbot.net/>`_
+that simplifies building haskell packages.
+
+If you are new to buildbot, please see the `tutorial
+<http://docs.buildbot.net/0.8.8/tutorial/index.html>`_.
+
+Example
+-------
+
+Here's a build factory that installs a package from hackage: ::
+
+  cabal = Cabal(sandbox=".")
+  factory = BuildFactory([cabal.update()
+                        , cabal.sandbox_init()
+                        , cabal.install(pkg)
+                        , cabal.sandbox_delete()
+                        ])
+
+
 Using a sandbox
 ---------------
 
@@ -55,10 +77,16 @@ Configuration options
   controls the ``-O`` flag passed to GHC (e.g.  ``optimization=1`` will
   result in ``-O1``).
 
+  default: 0
+
 :py:obj:`jobs`
   the number of jobs (threads) used for compilation. It corresponds to
   cabal's ``-j`` flag.
 
-:py:obj:`jobs`
+  default: 1
+
+:py:obj:`sandbox`
   specifies an optional sandbox directory. If it is not :py:const:`None`, all
   cabal commands will be sandboxed.
+
+  default: :py:obj:`None`
