@@ -66,6 +66,7 @@ class Cabal:
         """Run ``cabal install package``"""
         return ShellCommand(
             name="cabal install {0}".format(package),
+            description="Installing {0}".format(package),
             command=list(chain(["cabal"], self.__allOpts(config), ["install", package])),
             **config
         )
