@@ -8,18 +8,18 @@ class Cabal:
         self.optimization = optimization
         self.jobs = jobs
 
-    def sandboxOpt(self):
+    def __sandboxOpt(self):
         if not self.sandbox is None:
             yield "--sandbox-config-file={0}/cabal.sandbox.config".format(self.sandbox)
 
-    def optimizationOpt(self):
+    def __optimizationOpt(self):
         yield "--ghc-option=-O{0}".format(self.optimization)
 
-    def jobsOpt(self):
+    def __jobsOpt(self):
         yield "-j{0}".format(self.jobs)
 
-    def allOpts(self):
-        return chain(self.sandboxOpt(), self.optimizationOpt(), self.jobsOpt())
+    def __allOpts(self):
+        return chain(self.__sandboxOpt(), self.__optimizationOpt(), self.__jobsOpt())
 
     def update(self, **kwargs):
         return ShellCommand(
@@ -32,7 +32,7 @@ class Cabal:
     def install(self, package, **kwargs):
         return ShellCommand(
             name="cabal install {0}".format(package),
-            command=list(chain(["cabal", "install", package], self.allOpts())),
+            command=list(chain(["cabal", "install", package], self.__allOpts())),
             **kwargs
         )
 
