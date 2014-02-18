@@ -42,6 +42,7 @@ class Cabal:
                 "sandbox_init: sandbox is not defined.\n"
                 "Provide the sandbox argument when creating a Cabal object")
 
+    # FIXME probably doesn't work for a Windows slave
     def sandbox_init(self, **kwargs):
         self.__sandbox_check()
         return ShellCommand(
