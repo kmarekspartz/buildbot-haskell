@@ -13,7 +13,7 @@ Using a sandbox
 ---------------
 
 .. note::
-  For sandbox support, cabal-install 1.19 or newer is required.
+  For sandbox support, cabal-install 1.18 or newer is required.
 
 In order to use a sandbox, provide the ``sandbox`` argument to the ``Cabal``
 constructor, for example:
