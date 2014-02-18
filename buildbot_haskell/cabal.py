@@ -47,7 +47,11 @@ class Cabal:
             yield "--disable-tests"
 
     def __allOpts(self, config):
-        return chain(self.__sandboxOpt(config), self.__optimizationOpt(config), self.__jobsOpt(config))
+        return chain( self.__sandboxOpt(config)
+                    , self.__optimizationOpt(config)
+                    , self.__jobsOpt(config)
+                    , self.__testsOpt(config)
+                    )
 
     def update(self, **config):
         """Run ``cabal update``"""
