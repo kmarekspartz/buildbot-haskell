@@ -3,6 +3,15 @@ from itertools import chain
 import pipes
 
 class Cabal:
+    """
+    An object of the :py:class:`Cabal` class is used to issue ``cabal`` commands
+    with consistent settings. The settings themselves are specified when the
+    object is created, e.g.
+
+    ::
+            cabal = Cabal(sandbox=".", optimization=1, jobs=4)
+
+    """
     def __init__ (self, sandbox = None, optimization = 0, jobs = 1):
         self.sandbox = sandbox
         self.optimization = optimization
@@ -22,6 +31,7 @@ class Cabal:
         return chain(self.__sandboxOpt(), self.__optimizationOpt(), self.__jobsOpt())
 
     def update(self, **kwargs):
+        """Run ``cabal update``"""
         return ShellCommand(
             name="cabal update",
             description="Downloading the latest package list",
@@ -30,6 +40,7 @@ class Cabal:
         )
 
     def install(self, package, **kwargs):
+        """Run ``cabal install package``"""
         return ShellCommand(
             name="cabal install {0}".format(package),
             command=list(chain(["cabal", "install", package], self.__allOpts())),
@@ -42,8 +53,16 @@ class Cabal:
                 "sandbox_init: sandbox is not defined.\n"
                 "Provide the sandbox argument when creating a Cabal object")
 
-    # FIXME probably doesn't work for a Windows slave
     def sandbox_init(self, **kwargs):
+        """
+        Run ``cabal sandbox init`` in the sandbox directory specified during the
+        :py:class:`Cabal` instance creation
+
+        If the sandbox directory doesn't exist, it will be created.
+
+        .. note::
+          ``sandbox_init`` probably won't work with a Windows slave. Patches are welcome.
+        """
         self.__sandbox_check()
         return ShellCommand(
             name="cabal sandbox init",
@@ -51,6 +70,12 @@ class Cabal:
             command="mkdir -p {0} && cd {0} && cabal sandbox init".format(pipes.quote(self.sandbox))
         )
     def sandbox_delete(self, **kwargs):
+        """
+        Run ``cabal sandbox delete`` in the sandbox directory specified during the
+        :py:class:`Cabal` instance creation.
+
+        The directory itself is not removed.
+        """
         self.__sandbox_check()
         return ShellCommand(
             name="cabal sandbox delete",
