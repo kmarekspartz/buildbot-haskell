@@ -20,7 +20,11 @@ class Cabal:
             cabal.install("ansi-terminal", optimization=0, jobs=2)
 
     """
-    default_config = { 'sandbox': None, 'optimization': 0, 'jobs': 1 }
+    default_config = { 'sandbox': None
+                     , 'optimization': 0
+                     , 'jobs': 1
+                     , 'tests': True
+                     }
 
     def __init__ (self, **config):
         self.config = union(Cabal.default_config, config)
@@ -35,6 +39,12 @@ class Cabal:
 
     def __jobsOpt(self, config):
         yield "-j{0}".format(union(self.config, config)['jobs'])
+
+    def __testsOpt(self, config):
+        if union(self.config, config)['tests']:
+            yield "--enable-tests"
+        else:
+            yield "--disable-tests"
 
     def __allOpts(self, config):
         return chain(self.__sandboxOpt(config), self.__optimizationOpt(config), self.__jobsOpt(config))

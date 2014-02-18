@@ -87,3 +87,9 @@ Configuration options
   cabal commands will be sandboxed.
 
   default: :py:obj:`None`
+
+:py:obj:`tests`
+  a boolean value that tells whether to build/run the package's tests.
+  Correpsonds to cabal's ``--enable-tests``/``--disable-tests``.
+
+  default: :py:obj:`True`
