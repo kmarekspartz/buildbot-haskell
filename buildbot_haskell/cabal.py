@@ -6,11 +6,18 @@ class Cabal:
     """
     An object of the :py:class:`Cabal` class is used to issue ``cabal`` commands
     with consistent settings. The settings themselves are specified when the
-    object is created, e.g.
+    object is created, e.g. ::
 
-    ::
             cabal = Cabal(sandbox=".", optimization=1, jobs=4)
 
+    :py:obj:`optimization` controls the ``-O`` flag passed to GHC (e.g.
+    ``optimization=1`` will result in ``-O1``).
+
+    :py:obj:`jobs` is the number of jobs (threads) used for compilation. It
+    corresponds to cabal's ``-j`` flag.
+
+    :py:obj:`jobs` specifies an optional sandbox directory. If it is not
+    :py:const:`None`, all cabal commands will be sandboxed.
     """
     def __init__ (self, sandbox = None, optimization = 0, jobs = 1):
         self.sandbox = sandbox

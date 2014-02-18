@@ -42,9 +42,6 @@ If the sandbox doesn't exist yet, call :py:meth:`~buildbot_haskell.cabal.Cabal.s
 It will also create the sandbox directory (such as ``my/sandbox`` in the example
 above) if it doesn't exist.
 
-.. note::
-  ``sandbox_init`` probably won't work with a Windows slave. Patches are welcome.
-
 ``sandbox_delete`` will destroy the sandbox 
 
 Indices and tables
