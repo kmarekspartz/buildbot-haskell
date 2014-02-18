@@ -74,6 +74,7 @@ class Cabal:
         return ShellCommand(
             name="cabal sandbox init",
             description="Initializing sandbox at {0}".format(sandbox),
+            workdir=".",
             command="mkdir -p {0} && cd {0} && cabal sandbox init".format(pipes.quote(sandbox))
         )
     def sandbox_delete(self, **config):
