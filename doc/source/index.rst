@@ -9,10 +9,6 @@ buildbot-haskell
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: buildbot_haskell.cabal
-   :members:
-   :undoc-members:
-
 Using a sandbox
 ---------------
 
@@ -43,6 +39,13 @@ It will also create the sandbox directory (such as ``my/sandbox`` in the example
 above) if it doesn't exist.
 
 ``sandbox_delete`` will destroy the sandbox 
+
+
+API documentation
+-----------------
+
+.. automodule:: buildbot_haskell.cabal
+   :members:
 
 Indices and tables
 ==================
