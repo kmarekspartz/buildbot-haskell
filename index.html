@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>buildbot-haskell &mdash; buildbot-haskell 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="buildbot-haskell 0.1 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">buildbot-haskell 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="buildbot-haskell">
+<h1>buildbot-haskell<a class="headerlink" href="#buildbot-haskell" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="about">
+<h2>About<a class="headerlink" href="#about" title="Permalink to this headline">¶</a></h2>
+<p>buildbot-haskell is an add-on package for <a class="reference external" href="http://buildbot.net/">buildbot</a>
+that simplifies building haskell packages.</p>
+<p>If you are new to buildbot, please see the <a class="reference external" href="http://docs.buildbot.net/0.8.8/tutorial/index.html">tutorial</a>.</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s a build factory that installs a package from hackage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cabal</span> <span class="o">=</span> <span class="n">Cabal</span><span class="p">(</span><span class="n">sandbox</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">factory</span> <span class="o">=</span> <span class="n">BuildFactory</span><span class="p">([</span><span class="n">cabal</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+                      <span class="p">,</span> <span class="n">cabal</span><span class="o">.</span><span class="n">sandbox_init</span><span class="p">()</span>
+                      <span class="p">,</span> <span class="n">cabal</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
+                      <span class="p">,</span> <span class="n">cabal</span><span class="o">.</span><span class="n">sandbox_delete</span><span class="p">()</span>
+                      <span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-a-sandbox">
+<h2>Using a sandbox<a class="headerlink" href="#using-a-sandbox" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For sandbox support, cabal-install 1.18 or newer is required.</p>
+</div>
+<p>In order to use a sandbox, provide the <tt class="docutils literal"><span class="pre">sandbox</span></tt> argument to the <tt class="docutils literal"><span class="pre">Cabal</span></tt>
+constructor, for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cabal</span> <span class="o">=</span> <span class="n">Cabal</span><span class="p">(</span><span class="n">sandbox</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The sandbox path is relative to the builder&#8217;s directory. Note that this is not
+the same as the build steps&#8217; default working directory directory (which is
+<tt class="docutils literal"><span class="pre">build</span></tt> inside the builder&#8217;s directory).</p>
+<p>All cabal commands from a sandboxed <tt class="docutils literal"><span class="pre">Cabal</span></tt> instance will use that sandbox
+automatically, regardless of which directory they are invoked from.</p>
+<p>If the sandbox doesn&#8217;t exist yet, call <a class="reference internal" href="#buildbot_haskell.cabal.Cabal.sandbox_init" title="buildbot_haskell.cabal.Cabal.sandbox_init"><tt class="xref py py-meth docutils literal"><span class="pre">sandbox_init()</span></tt></a> to create it.
+It will also create the sandbox directory (such as <tt class="docutils literal"><span class="pre">my/sandbox</span></tt> in the example
+above) if it doesn&#8217;t exist.</p>
+<p>It is possible to set the sandbox on per-command basis if needed.</p>
+<p><a class="reference internal" href="#buildbot_haskell.cabal.Cabal.sandbox_delete" title="buildbot_haskell.cabal.Cabal.sandbox_delete"><tt class="xref py py-meth docutils literal"><span class="pre">sandbox_delete()</span></tt></a> will destroy the
+sandbox (but won&#8217;t remove the sandbox directory).</p>
+</div>
+<div class="section" id="api-documentation">
+<h2>API documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="buildbot_haskell.cabal.Cabal">
+<em class="property">class </em><tt class="descclassname">buildbot_haskell.cabal.</tt><tt class="descname">Cabal</tt><big>(</big><em>**config</em><big>)</big><a class="headerlink" href="#buildbot_haskell.cabal.Cabal" title="Permalink to this definition">¶</a></dt>
+<dd><p>An object of the <tt class="xref py py-class docutils literal"><span class="pre">Cabal</span></tt> class is used to issue <tt class="docutils literal"><span class="pre">cabal</span></tt>
+commands.</p>
+<p>Methods of the class accept a number of configuration parameters that are
+described in the corresponding section of the documentation. The default
+values can be also supplied when an object is created. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">cabal</span> <span class="o">=</span> <span class="n">Cabal</span><span class="p">(</span><span class="n">sandbox</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">,</span> <span class="n">optimization</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">cabal</span><span class="o">.</span><span class="n">install</span><span class="p">(</span><span class="s">&quot;ansi-terminal&quot;</span><span class="p">,</span> <span class="n">optimization</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">jobs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="buildbot_haskell.cabal.Cabal.install">
+<tt class="descname">install</tt><big>(</big><em>package</em>, <em>**config</em><big>)</big><a class="headerlink" href="#buildbot_haskell.cabal.Cabal.install" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run <tt class="docutils literal"><span class="pre">cabal</span> <span class="pre">install</span> <span class="pre">package</span></tt></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildbot_haskell.cabal.Cabal.sandbox_delete">
+<tt class="descname">sandbox_delete</tt><big>(</big><em>**config</em><big>)</big><a class="headerlink" href="#buildbot_haskell.cabal.Cabal.sandbox_delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run <tt class="docutils literal"><span class="pre">cabal</span> <span class="pre">sandbox</span> <span class="pre">delete</span></tt> in the sandbox directory specified during the
+<tt class="xref py py-class docutils literal"><span class="pre">Cabal</span></tt> instance creation.</p>
+<p>The directory itself is not removed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildbot_haskell.cabal.Cabal.sandbox_init">
+<tt class="descname">sandbox_init</tt><big>(</big><em>**config</em><big>)</big><a class="headerlink" href="#buildbot_haskell.cabal.Cabal.sandbox_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run <tt class="docutils literal"><span class="pre">cabal</span> <span class="pre">sandbox</span> <span class="pre">init</span></tt>.</p>
+<p>If the sandbox directory doesn&#8217;t exist, it will be created.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">sandbox_init</span></tt> probably won&#8217;t work with a Windows slave. Patches are welcome.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="buildbot_haskell.cabal.Cabal.update">
+<tt class="descname">update</tt><big>(</big><em>**config</em><big>)</big><a class="headerlink" href="#buildbot_haskell.cabal.Cabal.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run <tt class="docutils literal"><span class="pre">cabal</span> <span class="pre">update</span></tt></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="configuration-options">
+<h2>Configuration options<a class="headerlink" href="#configuration-options" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">optimization</span></tt></dt>
+<dd><p class="first">controls the <tt class="docutils literal"><span class="pre">-O</span></tt> flag passed to GHC (e.g.  <tt class="docutils literal"><span class="pre">optimization=1</span></tt> will
+result in <tt class="docutils literal"><span class="pre">-O1</span></tt>).</p>
+<p class="last">default: 0</p>
+</dd>
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">jobs</span></tt></dt>
+<dd><p class="first">the number of jobs (threads) used for compilation. It corresponds to
+cabal&#8217;s <tt class="docutils literal"><span class="pre">-j</span></tt> flag.</p>
+<p class="last">default: 1</p>
+</dd>
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">sandbox</span></tt></dt>
+<dd><p class="first">a string that points to an optional sandbox directory. If it is not
+<tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>, all cabal commands will be sandboxed.</p>
+<p class="last">default: <tt class="xref py py-obj docutils literal"><span class="pre">None</span></tt></p>
+</dd>
+<dt><tt class="xref py py-obj docutils literal"><span class="pre">tests</span></tt></dt>
+<dd><p class="first">a boolean value that tells whether to build/run the package&#8217;s tests.
+Correpsonds to cabal&#8217;s <tt class="docutils literal"><span class="pre">--enable-tests</span></tt>/<tt class="docutils literal"><span class="pre">--disable-tests</span></tt>.</p>
+<p class="last">default: <tt class="xref py py-obj docutils literal"><span class="pre">True</span></tt></p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">buildbot-haskell</a><ul>
+<li><a class="reference internal" href="#about">About</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#using-a-sandbox">Using a sandbox</a></li>
+<li><a class="reference internal" href="#api-documentation">API documentation</a></li>
+<li><a class="reference internal" href="#configuration-options">Configuration options</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">buildbot-haskell 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Roman Cheplyaka.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.1.
+    </div>
+  </body>
+</html>
