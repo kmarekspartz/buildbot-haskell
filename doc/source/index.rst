@@ -44,13 +44,21 @@ above) if it doesn't exist.
 API documentation
 -----------------
 
-.. automodule:: buildbot_haskell.cabal
+.. autoclass:: buildbot_haskell.cabal.Cabal
    :members:
 
-Indices and tables
-==================
+Configuration options
+---------------------
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
+:py:obj:`optimization`
+  controls the ``-O`` flag passed to GHC (e.g.  ``optimization=1`` will
+  result in ``-O1``).
+
+:py:obj:`jobs`
+  the number of jobs (threads) used for compilation. It corresponds to
+  cabal's ``-j`` flag.
+
+:py:obj:`jobs`
+  specifies an optional sandbox directory. If it is not :py:const:`None`, all
+  cabal commands will be sandboxed.

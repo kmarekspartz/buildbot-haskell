@@ -8,20 +8,16 @@ def union(x,y):
 
 class Cabal:
     """
-    An object of the :py:class:`Cabal` class is used to issue ``cabal`` commands
-    with consistent settings. The settings themselves are specified when the
-    object is created, e.g. ::
+    An object of the :py:class:`Cabal` class is used to issue ``cabal``
+    commands.
 
-            cabal = Cabal(sandbox=".", optimization=1, jobs=4)
+    Methods of the class accept a number of configuration parameters that are
+    described in the corresponding section of the documentation. The default
+    values can be also supplied when an object is created. Example: ::
 
-    :py:obj:`optimization` controls the ``-O`` flag passed to GHC (e.g.
-    ``optimization=1`` will result in ``-O1``).
+            cabal = Cabal(sandbox=".", optimization=1)
+            cabal.install("ansi-terminal", optimization=0, jobs=2)
 
-    :py:obj:`jobs` is the number of jobs (threads) used for compilation. It
-    corresponds to cabal's ``-j`` flag.
-
-    :py:obj:`jobs` specifies an optional sandbox directory. If it is not
-    :py:const:`None`, all cabal commands will be sandboxed.
     """
     default_config = { 'sandbox': None, 'optimization': 0, 'jobs': 1 }
 
@@ -67,8 +63,7 @@ class Cabal:
 
     def sandbox_init(self, **config):
         """
-        Run ``cabal sandbox init`` in the sandbox directory specified during the
-        :py:class:`Cabal` instance creation
+        Run ``cabal sandbox init``.
 
         If the sandbox directory doesn't exist, it will be created.
 
