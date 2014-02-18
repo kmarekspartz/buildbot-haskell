@@ -83,8 +83,8 @@ Configuration options
   default: 1
 
 :py:obj:`sandbox`
-  specifies an optional sandbox directory. If it is not :py:const:`None`, all
-  cabal commands will be sandboxed.
+  a string that points to an optional sandbox directory. If it is not
+  :py:const:`None`, all cabal commands will be sandboxed.
 
   default: :py:obj:`None`
 
