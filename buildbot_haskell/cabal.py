@@ -1,5 +1,6 @@
 from buildbot.steps.shell import ShellCommand
 from itertools import chain
+import pipes
 
 class Cabal:
     def __init__ (self, sandbox = None, optimization = 0, jobs = 1):
@@ -46,8 +47,7 @@ class Cabal:
         return ShellCommand(
             name="cabal sandbox init",
             description="Initializing sandbox at {0}".format(self.sandbox),
-            workdir=self.sandbox,
-            command=["cabal","sandbox","init"]
+            command=["mkdir -p {0} && cd {0} && cabal sandbox init".format(pipes.quote(self.sandbox))]
         )
     def sandbox_delete(self, **kwargs):
         self.__sandbox_check()
