@@ -1,4 +1,5 @@
 from buildbot.steps.shell import ShellCommand
+from buildbot.process.properties import Interpolate
 from itertools import chain
 import pipes
 
@@ -27,7 +28,7 @@ class Cabal:
     def __sandboxOpt(self, config):
         sandbox = union(self.config, config)['sandbox']
         if not sandbox is None:
-            yield "--sandbox-config-file={0}/cabal.sandbox.config".format(sandbox)
+            yield Interpolate("--sandbox-config-file=%(prop:workdir)s/{0}/cabal.sandbox.config".format(sandbox))
 
     def __optimizationOpt(self, config):
         yield "--ghc-option=-O{0}".format(union(self.config, config)['optimization'])
@@ -74,7 +75,7 @@ class Cabal:
         return ShellCommand(
             name="cabal sandbox init",
             description="Initializing sandbox at {0}".format(sandbox),
-            command="mkdir -p {0} && cd {0} && cabal sandbox init".format(pipes.quote(sandbox))
+            command=Interpolate("mkdir -p %(prop:workdir)s/{0} && cd %(prop:workdir)s/{0} && cabal sandbox init".format(pipes.quote(sandbox)))
         )
     def sandbox_delete(self, **config):
         """
@@ -87,5 +88,5 @@ class Cabal:
         return ShellCommand(
             name="cabal sandbox delete",
             description="Deleting sandbox at {0}".format(sandbox),
-            command="cd {0} && cabal sandbox delete".format(pipes.quote(sandbox))
+            command=Interpolate("cd %(prop:workdir)s/{0} && cabal sandbox delete".format(pipes.quote(sandbox)))
         )
