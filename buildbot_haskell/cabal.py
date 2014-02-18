@@ -22,7 +22,7 @@ class Cabal:
     default_config = { 'sandbox': None, 'optimization': 0, 'jobs': 1 }
 
     def __init__ (self, **config):
-        self.config = union(default_config, config)
+        self.config = union(Cabal.default_config, config)
 
     def __sandboxOpt(self, config):
         sandbox = union(self.config, config)['sandbox']
