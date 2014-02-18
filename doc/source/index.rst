@@ -44,24 +44,21 @@ constructor, for example:
 
   cabal = Cabal(sandbox=".")
 
-to use a sandbox right in the build directory or
-
-::
-
-  cabal = Cabal(sandbox="my/sandbox")
-
-to use a sandbox in a subdirectory.
+The sandbox path is relative to the builder's directory. Note that this is not
+the same as the build steps' default working directory directory (which is
+``build`` inside the builder's directory).
 
 All cabal commands from a sandboxed ``Cabal`` instance will use that sandbox
 automatically, regardless of which directory they are invoked from.
 
 If the sandbox doesn't exist yet, call :py:meth:`~buildbot_haskell.cabal.Cabal.sandbox_init` to create it.
-
 It will also create the sandbox directory (such as ``my/sandbox`` in the example
 above) if it doesn't exist.
 
-``sandbox_delete`` will destroy the sandbox 
+It is possible to set the sandbox on per-command basis if needed.
 
+:py:meth:`~buildbot_haskell.cabal.Cabal.sandbox_delete` will destroy the
+sandbox (but won't remove the sandbox directory).
 
 API documentation
 -----------------
