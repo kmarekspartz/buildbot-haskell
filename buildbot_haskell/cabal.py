@@ -32,7 +32,7 @@ class Cabal:
     def __optimizationOpt(self, config):
         yield "--ghc-option=-O{0}".format(union(self.config, config)['optimization'])
 
-    def __jobsOpt(self):
+    def __jobsOpt(self, config):
         yield "-j{0}".format(union(self.config, config)['jobs'])
 
     def __allOpts(self, config):
